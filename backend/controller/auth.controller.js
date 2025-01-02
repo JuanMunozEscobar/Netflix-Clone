@@ -63,5 +63,11 @@ export async function login(req,res){
     res.send("Login route");
 }
 export async function logout(req,res){
-    res.send("Logout route");
+    try {
+        res.clearCookie("jwt-netflix");
+        res.status(200).json({success: true, message: "Logged Out Successful"});
+    } catch (error) {
+        console.log("Error in Logout Controller ", error.message)
+        res.status(400).json({success: false, message: "Internal sever error" })
+    }
 }
