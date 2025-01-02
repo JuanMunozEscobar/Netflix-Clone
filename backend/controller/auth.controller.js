@@ -60,7 +60,36 @@ export async function signup(req,res){
     }
 }
 export async function login(req,res){
-    res.send("Login route");
+    try {
+        const {email, password} = req.body;
+        if(!email || !password){
+            return res.status(400).json({success: false, message: "All fields are required To Login"});
+        }
+
+        const user = await User.findOne({email:email});
+        if(!user){
+            return res.status(404).json({success: false, message: "Invalid email or password"}); //this is so other user cant tell what is missing
+        }
+        const isPasswordCorrect = await bcryptjs.compare(password, user.password);
+        if(!isPasswordCorrect){
+            return res.status(400).json({success: false, message: "Invalid email or password"}); 
+        }
+
+        generateTokenAndSetCookie(user._id, res);
+
+        res.status(200).json({
+            success: true,
+            user: {
+                ...user._doc,
+                password: ""
+            }
+        });
+
+
+    } catch (error) {
+        console.log("Error in login controller ", error.message)
+        res.status(500).json({success: false, message: "Internal Sever Error"});
+    }
 }
 export async function logout(req,res){
     try {
