@@ -1,5 +1,5 @@
 import { User } from "../model/user.model.js";
-import { fetchFromTMDB } from "../services/tmdb.service";
+import { fetchFromTMDB } from "../services/tmdb.service.js";
 
 export async function searchPerson(req,res){
     const { query } = req.params
@@ -84,5 +84,23 @@ export async function searchTv(req,res){
         console.log("Error in search Tv controller: ", error.message)
         res.status(500).json({success:false, message: "Internal Sever Error"});
 
+    }
+}
+
+export async function getSearchHistory(req,res){
+    try {
+        res.status(200).json({success: true, content: req.user.searchHistory});
+    } catch (error) {
+        console.log("Error in get Search History: ", error.message);
+        res.status(500).json({success: false, message: "Internal Server Error"});
+    }
+}
+
+export async function removeItemFromSearchHistory(req,res){
+    const { id } = req.params
+    try {
+        
+    } catch (error) {
+        
     }
 }
