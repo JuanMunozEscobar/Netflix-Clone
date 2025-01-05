@@ -13,7 +13,7 @@ export async function searchPerson(req,res){
         await User.findByIdAndUpdate(req.user._id, {
             $push:{
                 searchHistory: {
-                    id: response.results[0]._id,
+                    id: response.results[0].id,
                     image: response.results[0].profile_path,
                     title: response.results[0].name,
                     searchType: "person",
@@ -41,7 +41,7 @@ export async function searchMovie(req,res){
         await User.findByIdAndUpdate(req.user._id, {
             $push:{
                 searchHistory: {
-                    id: response.results[0]._id,
+                    id: response.results[0].id,
                     image: response.results[0].poster_path,
                     title: response.results[0].title,
                     searchType: "movie",
@@ -70,8 +70,8 @@ export async function searchTv(req,res){
         await User.findByIdAndUpdate(req.user._id, {
             $push:{
                 searchHistory: {
-                    id: response.results[0]._id,
-                    image: response.results[0].profile_path,
+                    id: response.results[0].id,
+                    image: response.results[0].poster_path,
                     title: response.results[0].name,
                     searchType: "tv",
                     createdAt: new Date(),
@@ -97,10 +97,18 @@ export async function getSearchHistory(req,res){
 }
 
 export async function removeItemFromSearchHistory(req,res){
-    const { id } = req.params
+    let { id } = req.params
+    id = parseInt(id);
     try {
-        
+        await User.findByIdAndUpdate(req.user._id, {
+            $pull:{
+                searchHistory: { id:id },
+            }
+        });
+
+        res.status(200).json({success: true, message: "Item Removed from search History"});
     } catch (error) {
-        
+        console.log("Error in removie item from search history: ", error.message);
+        res.status(500).json({success: false, message: "Internl Sever Error"});
     }
 }
