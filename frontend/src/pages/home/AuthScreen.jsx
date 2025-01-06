@@ -124,6 +124,32 @@ const AuthScreen = () => {
             </div>
             </div>
         </div>
+        {/* 4th Separator */}
+        <div className="h-2 w-full bg-[#232323]" aria-hidden="true"/>
+
+        {/* 4th Section */}
+        <div className="py-10 bg-black text-white">
+            <div className="flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col-reverse px-4 md:px-2">
+                {/*left side*/}
+                <div className="flex-1">
+                    <div className="relative">
+                        <img src="/kids.png" alt="kids image" className="mt-4"/>
+                    </div>
+                </div>
+
+                {/*right side*/}
+                <div className="flex-1 text-center md:text-left">
+                    <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-balance">
+                        Create profile for kids
+                    </h2>
+                    <p className="text-lg md:text-xl">
+                        Send kids on adventures with their favorite characters in a space made just for them-free 
+                        with your membership
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
   );
 };
