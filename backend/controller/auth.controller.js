@@ -15,7 +15,7 @@ export async function signup(req,res){
             return res.status(400).json({success: false, message: "Invalid Email"});
         }
         if(password.length < 6){
-            return res.status(400).json({success: false, message: "Passed Must be at least 6 characters"});
+            return res.status(400).json({success: false, message: "Password Must be at least 6 characters"});
         }
 
         const existingUserByEmail = await User.findOne({email:email});
