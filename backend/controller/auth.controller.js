@@ -50,7 +50,7 @@ export async function signup(req, res) {
         await newUser.save();
 
         res.status(201).json({
-            success: true, Message: { // This will return the User info but not the password
+            success: true, user: { // This will return the User info but not the password
                 ...newUser._doc,
                 password: ""
             }
