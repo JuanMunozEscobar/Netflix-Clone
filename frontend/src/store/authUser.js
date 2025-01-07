@@ -1,10 +1,13 @@
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { create } from 'zustand';
+import axios from 'axios';
+
+
 
 export const useAuthStore = create((set)=>({
     user: null,
     isSigningUp: false, 
+    isCheckingAuth: true,
     signup: async (credentials) => {
         try {
             const response = await axios.post("/api/v1/auth/signup", credentials);
@@ -17,5 +20,14 @@ export const useAuthStore = create((set)=>({
     },
     login: async () => {},
     logout: async () => {},
-    auth: async () => {},
+    authCheck: async () => {
+        set({isCheckingAuth: true});
+        try {
+            const  response = await axios.get("/api/v1/auth/authCheck");
+            set({user:response.data.user, isCheckingAuth:false});
+        } catch (error) {
+            console.log("An Error Occured in Checking Auth: " ,error.message)            
+            set({isCheckingAuth: false, user:null});
+        }
+    },
 }));
