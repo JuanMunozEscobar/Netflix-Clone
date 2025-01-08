@@ -6,7 +6,7 @@ import { useAuthStore } from "../store/authUser";
 export const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const {user, logout} =  useAuthStore()
+    const { user, logout } = useAuthStore()
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -33,10 +33,10 @@ export const Navbar = () => {
                 <Link to={"/search"}>
                     <Search className="size-6 cursor-pointer"></Search>
                 </Link>
-                <img src={user.image} alt="Avatar" className="h-8 rounded cursor-pointer"/>
-                <LogOut className="size-6 cursor-pointer" onClick={logout}/>
+                <img src={user.image} alt="Avatar" className="h-8 rounded cursor-pointer" />
+                <LogOut className="size-6 cursor-pointer" onClick={logout} />
                 <div className="sm:hidden">
-                    <Menu className="size-6 cursor-pointer" onClick={toggleMobileMenu}/>
+                    <Menu className="size-6 cursor-pointer" onClick={toggleMobileMenu} />
                 </div>
 
             </div>
