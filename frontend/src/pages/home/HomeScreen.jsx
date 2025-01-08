@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 import { Play, Info } from "lucide-react"
+import useGetTrendingContent from "../../hooks/useGetTrendingContent";
 
 const HomeScreen = () => {
+  const { trendingContent } = useGetTrendingContent();
+  console.log("Trending Content: ", trendingContent)
   return (
     <>
       <div className="relative h-screen text-white">
