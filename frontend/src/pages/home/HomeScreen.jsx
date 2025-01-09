@@ -7,7 +7,16 @@ import { ORIGINAL_IMG_BASE_URL } from "../../utils/constant";
 const HomeScreen = () => {
   const { trendingContent } = useGetTrendingContent();
   console.log("Trending Content: ", trendingContent)
- // TODO add a loading spinner
+  if (!trendingContent) {
+    return (
+      <div className=" h-screen text-white relative">
+        <Navbar />
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center -z-10 shimmer"
+        />
+      </div>
+    )
+  }
 
   return (
     <>
@@ -32,7 +41,7 @@ const HomeScreen = () => {
             <p className="mt-2 text-lg">
               {trendingContent?.release_date?.split("-")[0] ||
                 trendingContent?.first_air_date.split("-")[0]} {" "}
-              | {trendingContent?.adult? "18+" : "PG-13"}
+              | {trendingContent?.adult ? "18+" : "PG-13"}
             </p>
             <p className="mt-4 text-lg">
               {trendingContent?.overview.length > 200 ? trendingContent.overview.slice(0, 200) + "..."
