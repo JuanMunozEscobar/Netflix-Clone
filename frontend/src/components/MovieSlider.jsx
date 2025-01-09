@@ -24,7 +24,7 @@ const MovieSlider = ({ category }) => {
 
     return (
         <div className="bg-black text-white relative px-5 md:px-20">
-            <h2>{formattedCategoryName} {formattedContentType}</h2>
+            <h2 className="mb-4 text-2xl font-bold">{formattedCategoryName} {formattedContentType}</h2>
 
             <div className="flex space-x-4 overflow-x-scroll">
                 {content.map((item) => (
@@ -34,6 +34,9 @@ const MovieSlider = ({ category }) => {
                                 className="transition-transform duration-300 ease-in-out group-hover:scale-125"
                             />
                         </div>
+                        <p className="mt-2 text-center">
+                            {item.title || item.name}
+                        </p>
                     </Link>
                 ))}
             </div>
