@@ -1,8 +1,8 @@
-const MovieSlider = (category) => {
-    console.log(category)
-  return (
-    <div>MovieSlider</div>
-  )
+const MovieSlider = ({ category }) => {
+    console.log(category);
+    return (
+        <div className="text-white">{category}</div>
+    )
 }
 
 export default MovieSlider
