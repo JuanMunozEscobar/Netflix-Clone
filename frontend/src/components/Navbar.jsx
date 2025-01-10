@@ -11,7 +11,7 @@ export const Navbar = () => {
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-    const {contentType, setContentType} = useContentStore();
+    const { contentType, setContentType } = useContentStore();
     console.log("content type", contentType);
 
     return (
