@@ -6,6 +6,8 @@ import { Navbar } from "../components/Navbar";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReactPlayer from "react-player";
 import { ORIGINAL_IMG_BASE_URL, SMALL_IMG_BASE_URL } from "../utils/constant";
+import { formatReleaseDate } from "../utils/dateFunction";
+import { WatchPageSkeleton } from "../components/skeletons/WatchPageSkeleton";
 
 export const WatchPage = () => {
     const { id } = useParams();
@@ -17,13 +19,6 @@ export const WatchPage = () => {
     const { contentType } = useContentStore();
 
     const sliderRef = useRef(null);
-    function formatReleaseDate(date) {
-        return new Date(date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        });
-    }
 
     useEffect(() => {
         const getTrailers = async () => {
@@ -73,15 +68,38 @@ export const WatchPage = () => {
     const handleNext = () => {
         if (currentTrailerIdx < trailers.length - 1) setCurrentTrailerIdx(currentTrailerIdx + 1);
     };
+
     const handlePrev = () => {
         if (currentTrailerIdx > 0) setCurrentTrailerIdx(currentTrailerIdx - 1);
     };
+
     const scrollLeft = () => {
         if (sliderRef.current) sliderRef.current.scrollBy({ left: -sliderRef.current.offsetWidth, behavior: "smooth" });
     };
+
     const scrollRight = () => {
         if (sliderRef.current) sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth, behavior: "smooth" });
     };
+
+    if (loading) return (
+        <div className="min-h-screen bg-black p-10">
+            <WatchPageSkeleton></WatchPageSkeleton>
+        </div>
+    )
+
+    if (!content) {
+        return (
+            <div className="bg-black text-white h-screen">
+                <div className="max-w-6xl mx-auto">
+                    <Navbar />
+                    <div className="text-center mx-auto px-4 py-8 h-full mt-40">
+                        <h2 className="text-2xl sm:text-5xl font-bold text-balance">Content Not Found</h2>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className='bg-black min-h-screen text-white'>
             <div className='mx-auto container px-4 py-8 h-full'>
@@ -159,16 +177,19 @@ export const WatchPage = () => {
                         <h3 className='text-3xl font-bold mb-4'>Similar Movies/Tv Show</h3>
 
                         <div className='flex overflow-x-scroll scrollbar-hide gap-4 pb-4 group' ref={sliderRef}>
-                            {similarContent.map((content) => (
-                                <Link key={content.id} to={`/watch/${content.id}`} className='w-52 flex-none'>
-                                    <img
-                                        src={SMALL_IMG_BASE_URL + content.poster_path}
-                                        alt='Poster path'
-                                        className='w-full h-auto rounded-md'
-                                    />
-                                    <h4 className='mt-2 text-lg font-semibold'>{content.title || content.name}</h4>
-                                </Link>
-                            ))}
+                            {similarContent.map((content) => {
+                                if (content.poster_path === null) return null;
+                                return (
+                                    <Link key={content.id} to={`/watch/${content.id}`} className='w-52 flex-none'>
+                                        <img
+                                            src={SMALL_IMG_BASE_URL + content.poster_path}
+                                            alt='Poster path'
+                                            className='w-full h-auto rounded-md'
+                                        />
+                                        <h4 className='mt-2 text-lg font-semibold'>{content.title || content.name}</h4>
+                                    </Link>
+                                )
+                            })}
 
                             <ChevronRight
                                 className='absolute top-1/2 -translate-y-1/2 right-2 w-8 h-8
