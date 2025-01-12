@@ -91,13 +91,17 @@ export const SearchPage = () => {
                                         <h2 className="mt-2 text-xl font-bold">{result.name}</h2>
                                     </div>
                                 ) : (
-                                    <Link to={"/watch/" + result.id} className="flex flex-col items-center">
+                                    <Link to={"/watch/" + result.id} className="flex flex-col items-center"
+                                        onClick={() => {
+                                            setContentType(activeTab)
+                                        }}
+                                    >
                                         <img
                                             src={ORIGINAL_IMG_BASE_URL + result.poster_path}
                                             alt={result.title || result.name}
-                                            className="max-h-96 rounded mx-auto"
+                                            className="w-full rounded h-auto"
                                         />
-                                        <h2 className="mt-2 text-xl font-bold">{ result.title || result.name}</h2>
+                                        <h2 className="mt-2 text-xl font-bold">{result.title || result.name}</h2>
                                     </Link>
                                 )}
                             </div>
